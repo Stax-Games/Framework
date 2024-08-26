@@ -20,7 +20,7 @@ jobs:
     - uses: Roblox/setup-foreman@v1
       name: Install Foreman
       with:
-        version: "v3.1.0"
+        version: "^3.1.0"
         token: ${{ SECRETS.GITHUB_TOKEN }}
 
     - name: Lint
@@ -35,5 +35,5 @@ jobs:
     - uses: JohnnyMorganz/stylua-action@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        version: "v3.0.0"
+        version: "^4.0.0"
         args: --check .
