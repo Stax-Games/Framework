@@ -33,8 +33,6 @@ function Stax.Init()
 		Services = ServiceHandler.new(),
 	}, Stax)
 
-	stax.Services.Load()
-
 	return stax
 end
 

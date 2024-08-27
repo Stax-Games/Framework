@@ -2,6 +2,7 @@
     SERVICES
 --]]
 local _RunService = game:GetService("RunService")
+local _ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 --[[
     TYPES
@@ -10,6 +11,7 @@ local Types = require(script.Parent.Parent.types.core)
 
 local ServiceHandler: Types.ServiceHandler = {
 	Services = {},
+	ServicesCount = 0,
 }
 
 function ServiceHandler.new()
@@ -29,6 +31,7 @@ function ServiceHandler.new()
 				local requiredService = require(service)
 
 				ServiceHandler.Services[service.name] = requiredService
+				ServiceHandler.ServicesCount = ServiceHandler.ServicesCount + 1
 
 				print("Loaded Server Service: " .. tostring(service.name))
 			end
@@ -45,6 +48,7 @@ function ServiceHandler.new()
 				local requiredService = require(service)
 
 				ServiceHandler.Services[service.name] = requiredService
+				ServiceHandler.ServicesCount = ServiceHandler.ServicesCount + 1
 			end
 		end
 	end
@@ -59,6 +63,7 @@ function ServiceHandler.new()
 		local requiredService = require(service)
 
 		ServiceHandler.Services[requiredService.name] = requiredService
+		ServiceHandler.ServicesCount = ServiceHandler.ServicesCount + 1
 	end
 
 	print("[STAX]: ServiceHandler | Fetched Services")
@@ -68,85 +73,66 @@ function ServiceHandler.new()
 	return ServiceHandler
 end
 
-function ServiceHandler.Load(name: string?)
+function ServiceHandler.Load()
 	print("[STAX]: ServiceHandler | Loading Services")
 
-	if name then
-		local service = ServiceHandler.Services[name]
+	local loaded = 0
 
-		if not service then
-			return
-		end
+	for _, service in pairs(ServiceHandler.Services) do
+		service.Load(function()
+			loaded = loaded + 1
 
-		service.Load()
-	else
-		for _, service in pairs(ServiceHandler.Services) do
-			service.Load()
-		end
+			print("[STAX]: ServiceHandler | " .. service.name .. " Loaded!")
 
-		ServiceHandler.Initialize()
+			if loaded == ServiceHandler.ServicesCount then
+				print("[STAX]: ServiceHandler | Loaded Services")
+				ServiceHandler.Initialize()
+			end
+		end)
 	end
-
-	print("[STAX]: ServiceHandler | Loaded Services")
 end
 
-function ServiceHandler.Initialize(name: string?)
+function ServiceHandler.Initialize()
 	print("[STAX]: ServiceHandler | Initializing Services")
+	local initialized = 0
 
-	if name then
-		local service = ServiceHandler.Services[name]
+	for _, service in pairs(ServiceHandler.Services) do
+		service.Initialize(function()
+			initialized = initialized + 1
 
-		if not service then
-			return
-		end
+			print("[STAX]: ServiceHandler | " .. service.name .. " Initialized!")
 
-		service.Initialize()
-	else
-		for _, service in pairs(ServiceHandler.Services) do
-			service.Initialize()
-		end
-
-		ServiceHandler.Start()
+			if initialized == ServiceHandler.ServicesCount then
+				print("[STAX]: ServiceHandler | Initialized Services")
+				ServiceHandler.Start()
+			end
+		end)
 	end
-
-	print("[STAX]: ServiceHandler | Initialized Services")
 end
 
-function ServiceHandler.Start(name: string?)
+function ServiceHandler.Start()
 	print("[STAX]: ServiceHandler | Starting Services")
 
-	if name then
-		local service = ServiceHandler.Services[name]
+	local started = 0
 
-		if not service then
-			return
-		end
+	for _, service in pairs(ServiceHandler.Services) do
+		service.Start(function()
+			started = started + 1
 
-		service.Start()
-	else
-		for _, service in pairs(ServiceHandler.Services) do
-			service.Start()
-		end
+			print("[STAX]: ServiceHandler | " .. service.name .. " Started!")
+
+			if started == ServiceHandler.ServicesCount then
+				print("[STAX]: ServiceHandler | All Services Started")
+			end
+		end)
 	end
-
-	print("[STAX]: ServiceHandler | Started Services")
 end
 
-function ServiceHandler.Stop(name: string?)
+function ServiceHandler.Stop()
 	print("[STAX]: ServiceHandler | Stopping Services")
 
-	if name then
-		local service = ServiceHandler.Services[name]
-
-		if not service then
-			return
-		end
-
+	for _, service in pairs(ServiceHandler.Services) do
 		service.Stop()
-	else
-		for _, service in pairs(ServiceHandler.Services) do
-			service.Stop()
-		end
 	end
 
 	print("[STAX]: ServiceHandler | Stopped Services")

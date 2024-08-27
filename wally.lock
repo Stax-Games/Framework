@@ -3,6 +3,11 @@
 registry = "test"
 
 [[package]]
+name = "joshuaclarkelua/promise"
+version = "4.0.12"
+dependencies = []
+
+[[package]]
 name = "jsdotlua/boolean"
 version = "1.2.7"
 dependencies = [["number", "jsdotlua/number@1.2.7"]]
@@ -90,4 +95,4 @@ dependencies = [["collections", "jsdotlua/collections@1.2.7"]]
 [[package]]
 name = "xander1998/staxframework"
 version = "0.1.0"
-dependencies = [["react-roblox", "jsdotlua/react-roblox@17.1.0"]]
+dependencies = [["promise", "joshuaclarkelua/promise@4.0.12"], ["react-roblox", "jsdotlua/react-roblox@17.1.0"]]

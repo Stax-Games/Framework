@@ -1,27 +1,29 @@
 --[[
     SERVICES
 --]]
-local _RS = game:GetService("ReplicatedStorage")
+local _ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 --[[
     IMPORTS
 --]]
-local Types = require(_RS.framework.stax.types.core)
+local Types = require(_ReplicatedStorage.framework.stax.types.core)
 
 local ComponentService: Types.Service<Types.ComponentService> = {
 	name = "ComponentService",
 	Components = {},
 }
 
-function ComponentService.Load()
-	print(ComponentService.name .. " Loaded!")
+function ComponentService.Load(next: () -> nil)
+	next()
 end
 
-function ComponentService.Initialize()
-	print(ComponentService.name .. " Initialized!")
+function ComponentService.Initialize(next: () -> nil)
+	next()
 end
 
-function ComponentService.Start() end
+function ComponentService.Start(next: () -> nil)
+	next()
+end
 
 function ComponentService.Stop() end
 
