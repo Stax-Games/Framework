@@ -40,7 +40,10 @@ export type ServiceHandler = {
 --[[
     storage\framework\stax\component.luau
 --]]
-export type Component<T> = {}
+export type Component<T> = {
+	name: string,
+	new: () -> Component<T>,
+}
 
 --[[
 	server\services\components.luau

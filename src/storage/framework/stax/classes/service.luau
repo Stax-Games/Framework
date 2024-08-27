@@ -7,10 +7,8 @@ local Types = require(script.Parent.Parent.types.core)
 
 local Service = {}
 
-function Service.new<T>(newService: Types.Service<T>): Types.Service<T>
-	return {
-		table.unpack(newService),
-	}
+function Service.new<T>(data: table): Types.Service<T>
+	return setmetatable(data, Service)
 end
 
 function Service:Load() end
