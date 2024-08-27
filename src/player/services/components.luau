@@ -21,6 +21,8 @@ function ComponentService.Start() end
 
 function ComponentService.Stop() end
 
-function ComponentService.Fetch<T>(name: string): T end
+function ComponentService.Fetch<T>(name: string): T
+	print(name)
+end
 
 return ComponentService

@@ -30,7 +30,6 @@ Stax.__index = Stax
 --]]
 function Stax.Init()
 	local stax = setmetatable({
-		Components = {},
 		Services = ServiceHandler.new(),
 	}, Stax)
 

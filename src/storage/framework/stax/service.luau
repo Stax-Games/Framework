@@ -21,10 +21,16 @@ function Service:Start() end
 
 function Service:Stop() end
 
-function Service.add(service: Types.Service) end
+function Service.add<T>(service: Types.Service<T>)
+	print(service)
+end
 
-function Service.remove(service: string) end
+function Service.remove(service: string)
+	print(service)
+end
 
-function Service.get(service: string) end
+function Service.get(service: string)
+	print(service)
+end
 
 return Service
