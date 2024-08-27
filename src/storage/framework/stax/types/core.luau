@@ -38,14 +38,9 @@ export type ServiceHandler = {
 }
 
 --[[
-	storage\framework\stax\handlers\component.luau
---]]
-export type ComponentHandler = {}
-
---[[
     storage\framework\stax\component.luau
 --]]
-export type Component = {}
+export type Component<T> = {}
 
 --[[
 	server\services\components.luau

@@ -3,7 +3,7 @@
 --[[
     IMPORTS
 --]]
-local Types = require(script.Parent.types)
+local Types = require(script.Parent.Parent.types.core)
 
 local Service = {}
 

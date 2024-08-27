@@ -8,7 +8,7 @@ local _RS = game:GetService("ReplicatedStorage")
 --[[
     TYPES
 --]]
-local Types = require(script.Parent.Parent.types)
+local Types = require(script.Parent.Parent.types.core)
 
 --[[
 	REFERENCES

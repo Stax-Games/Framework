@@ -3,7 +3,7 @@
 --[[
     TYPES
 --]]
-local Types = require(script.types)
+local Types = require(script.types.core)
 
 --[[
     IMPORTS
