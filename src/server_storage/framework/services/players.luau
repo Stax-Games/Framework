@@ -1,32 +1,83 @@
 --[[
     SERVICES
 --]]
--- local _ReplicatedStorage = game:GetService("ReplicatedStorage")
--- local ServerScriptService = game:GetService("ServerScriptService")
--- local ServerStorage = game:GetService("ServerStorage")
+local _ServerStorage = game:GetService("ServerStorage")
+local _ReplicatedStorage = game:GetService("ReplicatedStorage")
+local _Players = game:GetService("Players")
 
 --[[
-    IMPORTS
+    CLASS IMPORTS
 --]]
--- local Types = require(_ReplicatedStorage.framework.stax.types.core)
+local Player = require(_ServerStorage.framework.classes.player)
+local Service = require(_ReplicatedStorage.framework.stax.classes.service)
+local Network = require(_ReplicatedStorage.framework.stax.utils.network)
 
--- local PlayerService: Types.Service = {
--- 	name = "PlayerService",
--- 	Players = {},
--- }
+--[[
+    TYPES
+--]]
+local CoreTypes = require(_ReplicatedStorage.framework.stax.types.core)
+local ServiceTypes = require(_ReplicatedStorage.framework.stax.types.services)
 
--- function PlayerService.Load(next: () -> nil)
--- 	next()
--- end
+--[[
+	PLAYERSERVICE EVENTS
+--]]
+local Fetch = Network.BindableFunction("PlayerService", "Fetch")
 
--- function PlayerService.Initialize(next: () -> nil)
--- 	next()
--- end
+--[[
+	PLAYERSERVICE
+--]]
+local PlayerService: CoreTypes.Service<ServiceTypes.PlayerService> = Service.new({
+	name = "PlayerService",
+	Players = {},
+})
 
--- function PlayerService.Start(next: () -> nil)
--- 	next()
--- end
+--[[
+    USABLE METHODS
+--]]
+function PlayerService.Fetch(uid: number)
+	local fetchedPlayer = PlayerService.Players[uid]
 
--- function PlayerService.Stop(next: () -> nil)
--- 	next()
--- end
+	if not fetchedPlayer then
+		return nil
+	end
+
+	return fetchedPlayer
+end
+
+function PlayerService.MassSave(): boolean
+	return false
+end
+
+--[[
+    SERVICE EVENTS
+--]]
+function PlayerService.Added(player: Player)
+	PlayerService.Players[player.UserId] = Player.new(player)
+end
+
+function PlayerService.Removing(player: Player)
+	PlayerService.Players[player.UserId] = nil
+end
+
+---[[ REQUIRED METHODS ]]
+function PlayerService.Load(next: () -> nil)
+	next()
+end
+
+function PlayerService.Initialize(next: () -> nil)
+	_Players.PlayerAdded:Connect(PlayerService.Added)
+	_Players.PlayerRemoving:Connect(PlayerService.Removing)
+	Fetch.OnInvoke = PlayerService.Fetch
+
+	next()
+end
+
+function PlayerService.Start(next: () -> nil)
+	next()
+end
+
+function PlayerService.Stop(next: () -> nil)
+	next()
+end
+
+return PlayerService

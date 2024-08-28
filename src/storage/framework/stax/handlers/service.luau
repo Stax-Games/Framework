@@ -2,7 +2,6 @@
     SERVICES
 --]]
 local _RunService = game:GetService("RunService")
-local _ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 --[[
     TYPES
@@ -20,7 +19,7 @@ function ServiceHandler.new()
 	local isServer = _RunService:IsServer()
 
 	if isServer then
-		local services = game:GetService("ServerScriptService").services:GetDescendants()
+		local services = game:GetService("ServerStorage").framework.services:GetDescendants()
 
 		if services then
 			for _, service in pairs(services) do
@@ -32,12 +31,10 @@ function ServiceHandler.new()
 
 				ServiceHandler.Services[service.name] = requiredService
 				ServiceHandler.ServicesCount = ServiceHandler.ServicesCount + 1
-
-				print("Loaded Server Service: " .. tostring(service.name))
 			end
 		end
 	else
-		local services = game:GetService("StarterPlayer").StarterPlayerScripts.services:GetDescendants()
+		local services = game:GetService("StarterPlayer").StarterPlayerScripts.framework.services:GetDescendants()
 
 		if services then
 			for _, service in pairs(services) do

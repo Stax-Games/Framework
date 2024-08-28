@@ -38,21 +38,6 @@ export type ServiceHandler = {
 }
 
 --[[
-    storage\framework\stax\component.luau
---]]
-export type Component<T> = {
-	name: string,
-	new: () -> Component<T>,
-}
-
---[[
-	server\services\components.luau
---]]
-export type ComponentService = {
-	Fetch: <T>(name: string) -> T,
-}
-
---[[
 	storage\framework\stax\utils\network.luau
 --]]
 export type Network = {

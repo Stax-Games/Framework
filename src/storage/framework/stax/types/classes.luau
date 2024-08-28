@@ -8,4 +8,8 @@ export type Player = {
 	uid: number,
 }
 
+export type Door = {
+	_doorModel: Model,
+}
+
 return Types

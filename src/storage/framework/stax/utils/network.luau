@@ -42,6 +42,8 @@ function Network.BindableEvent(category: string, name: string): BindableEvent
 			local _newRemote = Instance.new("BindableEvent")
 			_newRemote.Name = name
 			_newRemote.Parent = _category
+
+			return _newRemote
 		end
 	else
 		local _newCategory = Instance.new("Folder")
@@ -51,6 +53,8 @@ function Network.BindableEvent(category: string, name: string): BindableEvent
 		local _newRemote = Instance.new("BindableEvent")
 		_newRemote.Name = name
 		_newRemote.Parent = _newCategory
+
+		return _newRemote
 	end
 end
 
@@ -76,6 +80,8 @@ function Network.RemoteEvent(category: string, name: string): RemoteEvent
 			local _newRemote = Instance.new("RemoteEvent")
 			_newRemote.Name = name
 			_newRemote.Parent = _category
+
+			return _newRemote
 		end
 	else
 		local _newCategory = Instance.new("Folder")
@@ -85,6 +91,8 @@ function Network.RemoteEvent(category: string, name: string): RemoteEvent
 		local _newRemote = Instance.new("RemoteEvent")
 		_newRemote.Name = name
 		_newRemote.Parent = _newCategory
+
+		return _newRemote
 	end
 end
 
@@ -110,6 +118,8 @@ function Network.UnreliableRemoteEvent(category: string, name: string): Unreliab
 			local _newRemote = Instance.new("UnreliableRemoteEvent")
 			_newRemote.Name = name
 			_newRemote.Parent = _category
+
+			return _newRemote
 		end
 	else
 		local _newCategory = Instance.new("Folder")
@@ -119,6 +129,8 @@ function Network.UnreliableRemoteEvent(category: string, name: string): Unreliab
 		local _newRemote = Instance.new("UnreliableRemoteEvent")
 		_newRemote.Name = name
 		_newRemote.Parent = _newCategory
+
+		return _newRemote
 	end
 end
 
@@ -144,6 +156,8 @@ function Network.RemoteFunction(category: string, name: string): RemoteFunction
 			local _newRemote = Instance.new("RemoteFunction")
 			_newRemote.Name = name
 			_newRemote.Parent = _category
+
+			return _newRemote
 		end
 	else
 		local _newCategory = Instance.new("Folder")
@@ -153,6 +167,46 @@ function Network.RemoteFunction(category: string, name: string): RemoteFunction
 		local _newRemote = Instance.new("RemoteFunction")
 		_newRemote.Name = name
 		_newRemote.Parent = _newCategory
+
+		return _newRemote
+	end
+end
+
+function Network.BindableFunction(category: string, name: string): BindableFunction
+	local _category = RemotesPath:FindFirstChild(category)
+
+	if _category then
+		local existing = _category:FindFirstChild(name)
+
+		if existing then
+			if not existing:IsA("BindableFunction") then
+				error(
+					"Network.BindableFunction | Couldn't create BindableFunction = '"
+						.. category
+						.. "/"
+						.. name
+						.. " because another event matches the name but isn't the same BindableFunction type!"
+				)
+			end
+
+			return existing
+		else
+			local _newRemote = Instance.new("BindableFunction")
+			_newRemote.Name = name
+			_newRemote.Parent = _category
+
+			return _newRemote
+		end
+	else
+		local _newCategory = Instance.new("Folder")
+		_newCategory.Name = category
+		_newCategory.Parent = RemotesPath
+
+		local _newRemote = Instance.new("BindableFunction")
+		_newRemote.Name = name
+		_newRemote.Parent = _newCategory
+
+		return _newRemote
 	end
 end
 
