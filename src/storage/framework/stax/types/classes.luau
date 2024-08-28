@@ -10,6 +10,12 @@ export type Player = {
 
 export type Door = {
 	_doorModel: Model,
+	type: string,
+
+	new: (doorModel: Model) -> Door,
+
+	Open: (door: Door) -> nil,
+	Close: (door: Door) -> nil,
 }
 
 return Types

@@ -5,7 +5,7 @@ local _CollectionService = game:GetService("CollectionService")
 --[[
     CLASS IMPORTS
 --]]
--- local Door = require(_ServerStorage.framework.classes.door)
+local Door = require(_ServerStorage.framework.classes.door)
 local Service = require(_ReplicatedStorage.framework.stax.classes.service)
 
 --[[
@@ -28,7 +28,9 @@ local DoorService: CoreTypes.Service<ServiceTypes.DoorService> = Service.new({
 function DoorService.Load(next: () -> nil)
 	local doors = _CollectionService:GetTagged("Door")
 
-	print("Doors Found: ", doors)
+	for _, door in pairs(doors) do
+		table.insert(DoorService.Doors, Door.new(door))
+	end
 
 	next()
 end
